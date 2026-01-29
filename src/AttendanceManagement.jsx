@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+const API_URL = import.meta.env.VITE_APP_API_URL;
+
 
 function AttendanceManagement() {
   const [employees, setEmployees] = useState([]);
@@ -18,7 +20,7 @@ function AttendanceManagement() {
   // Fetch all employees
   const fetchEmployees = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/employees");
+      const res = await fetch(`${API_URL}employees`);
       const data = await res.json();
       setEmployees(data);
     } catch {
@@ -35,7 +37,7 @@ function AttendanceManagement() {
 console.log("Fetching attendance for emp:", emp);
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/employees/${emp}/attendance`
+        `${API_URL}employees/${emp}/attendance`
       );
       const data = await res.json();
       setAttendance(data);
@@ -56,7 +58,7 @@ console.log("Fetching attendance for emp:", emp);
     }
 console.log("Marking attendance for emp:", emp, "with data:", form);
     try {
-      await fetch(`http://127.0.0.1:8000/employees/${emp}/attendance`, {
+      await fetch(`${API_URL}employees/${emp}/attendance`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
