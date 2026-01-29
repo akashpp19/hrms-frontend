@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+const API_URL = import.meta.env.VITE_APP_API_URL;
+
 function EmployeeManagement() {
   const [employees, setEmployees] = useState([]);
   const [form, setForm] = useState({
@@ -17,7 +19,7 @@ function EmployeeManagement() {
   // ✅ Fetch all employees
   const fetchEmployees = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/employees");
+      const response = await fetch(`${API_URL}employees`);
       const data = await response.json();
       setEmployees(data);
     } catch (err) {
@@ -30,7 +32,7 @@ function EmployeeManagement() {
     e.preventDefault();
 
     try {
-      await fetch("http://127.0.0.1:8000/employees", {
+      await fetch(`${API_URL}employees`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -52,7 +54,7 @@ function EmployeeManagement() {
   // ✅ Delete employee
   const deleteEmployee = async (id) => {
     try {
-      await fetch(`http://127.0.0.1:8000/employees/${id}`, {
+      await fetch(`${API_URL}employees/${id}`, {
         method: "DELETE",
       });
 
